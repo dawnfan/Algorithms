@@ -11,25 +11,34 @@ int main()
 {
     // A sample input
     // You can write your own test code.
-    char A[] = "Cormen";
-    char B[] = "Leiserson";
-    char C[] = "CieLosrmeresonn";
+	//char A[] = "Cormen";
+	//char B[] = "Leiserson";
+	//char C[] = "CieLosrmeresonn";
+	//char C[] = "LCeiosermresonn";
+	char A[] = "abcdefg";
+	char B[] = "hijklmnopq";
+	char C[] = "abcdefghijklmnopq";
+
 
     // Check correctness
     // In this case, the merge check should return false since the character order of A and B is wrong
-    if (check(A, B, C) == 0)
+    if (check(A, B, C) == 1)
         printf("PASS.\n");
+	else
+	{
+		printf("Fail.\n");
+	}
 
     // Check complexity
     srand((unsigned int)time(NULL));
     char LA[LLEN];
     char LB[LLEN];
-    char* LC = (char*) malloc (sizeof(char)*(LLEN*2-1));
+    char* LC = (char*) malloc (sizeof(char)*(LLEN*2));
     for (int i = 0; i < LLEN; i++)
     {
         // random character, in this simple case your check algorithm should return 1
-        LC[2*i] = LA[i] = random()%26 + 'a';
-        LC[2*i+1] = LB[i] = random()%26 + 'a';
+        LC[2*i] = LA[i] = rand()%26 + 'a';
+        LC[2*i+1] = LB[i] = rand()%26 + 'a';
     }
     LA[LLEN-1] = LB[LLEN-1] = LC[LLEN*2-2] = '\0';
 
