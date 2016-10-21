@@ -56,7 +56,10 @@ int threeSum(int* S, int len, int k)
 				}
 			}
 		}
+		if (S[s_head]+S[s_tail] < temp_k)
+		{
 
+		}
 	}
 
     return closest;
