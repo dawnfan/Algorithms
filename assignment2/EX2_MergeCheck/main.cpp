@@ -15,9 +15,9 @@ int main()
 	//char B[] = "Leiserson";
 	//char C[] = "CieLosrmeresonn";
 	//char C[] = "LCeiosermresonn";
-	char A[] = "abcdefg";
-	char B[] = "hijklmnopq";
-	char C[] = "abcdefghijklmnopq";
+	char A[] = "aabb";
+	char B[] = "aba";
+	char C[] = "abaabab"; 
 
 
     // Check correctness
@@ -46,7 +46,7 @@ int main()
 
     for (int i = 0; i < LOOP; i++)
     {
-        check(A, B, C);
+        check(LA, LB, LC);
     }
     clock_t end = clock();
     printf("Time consuming for %d times: %f ms\n", LOOP, (double)(end-begin)*1000/CLOCKS_PER_SEC);
