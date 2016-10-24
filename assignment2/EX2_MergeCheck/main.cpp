@@ -11,13 +11,13 @@ int main()
 {
     // A sample input
     // You can write your own test code.
-	//char A[] = "Cormen";
-	//char B[] = "Leiserson";
+	char A[] = "Cormen";
+	char B[] = "Leiserson";
 	//char C[] = "CieLosrmeresonn";
-	//char C[] = "LCeiosermresonn";
-	char A[] = "aabb";
-	char B[] = "aba";
-	char C[] = "abaabab"; 
+	char C[] = "LCeiosermresonn";
+	//char A[] = "aabb";
+	//char B[] = "aba";
+	//char C[] = "abaabab"; 
 
 
     // Check correctness

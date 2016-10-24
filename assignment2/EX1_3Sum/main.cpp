@@ -9,7 +9,7 @@
 int main()
 {
     // A sample input and output
-    int nums[] = {-1, 0, 1, 2, -1, -4};
+    int nums[] = {-1, 0, 1, -2, -1, -4};
     int resLen = 0;
 
     // Check correctnes, in this case the correct answer is
