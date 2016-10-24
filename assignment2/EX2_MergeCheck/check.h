@@ -19,11 +19,15 @@ int check(char *A, char *B, char *C)
     // Hint: using '\0' to check end of the string //
     /////////////////////////////////////////////////
 
-	int isPass = 1;
 	int p_A = 0, p_B = 0, p_C = 0;
-
-	while (isPass == 1 && C[p_C] != '\0'){
-		if (A[p_A] != '\0' && C[p_C] == A[p_A])
+	while (C[p_C] != '\0')
+	{
+		if (C[p_C] == A[p_A] && C[p_C] == B[p_B])
+		{
+			return check(A + p_A + 1, B + p_B, C + p_C + 1) || 
+					check(A + p_A, B + p_B + 1, C + p_C + 1);
+		}
+		else if (A[p_A] != '\0' && C[p_C] == A[p_A])
 		{
 			p_A++;
 		}
@@ -31,14 +35,13 @@ int check(char *A, char *B, char *C)
 		{
 			p_B++;
 		}
-		else
-		{
-			isPass = 0;
+		else{
+			return 0;
 		}
 		p_C++;
 	}
 
-    return isPass;
-}
+	return 1;
+} 
 
 #endif
