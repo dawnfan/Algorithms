@@ -58,7 +58,8 @@ void WriteTxtImage(char* txtname, int** imageMat){
 	{
 		for (int t_c = 0; t_c < ImageColNum; t_c++)
 		{
-			arrFile << (int)(((double)imageMat[t_r][t_c] / max_out) * 255) << ' ';
+			int temp_out = (int)(((double)imageMat[t_r][t_c] / max_out) * 255);
+			arrFile << temp_out << ' ';
 		}
 		arrFile << '\n';
 	}
@@ -98,38 +99,68 @@ void unary_cost(double** L_in, double** R_in, double*** &dist_out){
 	return;
 }
 
-void potts_cost(double** L_in, double*** &potts_out){
+double potts_cost(int pos_1[2], int pos_2[2], double** disp_in){
 	// calculate the smoothness term- Potts-Model
-	potts_out = new double**[ImageRawNum];
+	double cost_out = 0;
+
+	cost_out = pow(disp_in[pos_1[0]][pos_1[1]] - disp_in[pos_2[0]][pos_2[1]], 2);
+	cost_out = cost_out > K_POTTS ? K_POTTS : cost_out;
+
+	return cost_out;
+}
+
+void initialize(double*** dist_in, double** &disp_out){
+	// initialize the disparities
+	disp_out = new double*[ImageRawNum];
 	// #1: initialize out matrix
 	for (int t_r = 0; t_r < ImageRawNum; t_r++)
 	{
-		potts_out[t_r] = new double*[ImageColNum];
-		for (int t_c = 0; t_c < ImageColNum; t_c++)
-		{
-			potts_out[t_r][t_c] = new double[4];
-		}
+		disp_out[t_r] = new double[ImageColNum];
 	}
-	// #2: calculate the cost
+	// #2: initialize the disparity matrix -- find the minimum unary-cost for every pixel
 	for (int t_r = 0; t_r < ImageRawNum; t_r++)
 	{
 		for (int t_c = 0; t_c < ImageColNum; t_c++)
 		{
-			// potts_out[t_r][t_c][0] = t_r > 0 ? 0 : 
-			if (t_r < ImageRawNum)
+			double min_dist = MAX_DOUBLE_VALUE;
+			for (int t_d = 0; t_d < MAXD; t_d++)
 			{
-			}
-			if (t_c < ImageColNum)
-			{
+				if (min_dist > dist_in[t_r][t_c][t_d])
+				{
+					min_dist = dist_in[t_r][t_c][t_d];
+					disp_out[t_r][t_c] = t_d;
+				}
 			}
 		}
 	}
+
 	return;
 }
 
-double check_potts(double cost_in){
-	cost_in = cost_in > 50 ? 50 : cost_in;
-	return cost_in;
+void MatchStereo(double** left_mat, double** right_mat){
+	OutImageMat = new int*[ImageRawNum];
+	for (int t_i = 0; t_i < ImageRawNum; t_i++)
+	{
+		OutImageMat[t_i] = new int[ImageColNum];
+	}
+	double** disp;
+	double*** dist;
+	unary_cost(left_mat, right_mat, dist);
+	initialize(dist, disp);
+	// # test: initialization of disparities.
+	for (int t_r = 0; t_r < ImageRawNum; t_r++)
+	{
+		for (int t_c = 0; t_c < ImageColNum; t_c++)
+		{
+			OutImageMat[t_r][t_c] = disp[t_r][t_c];
+			if (max_out < OutImageMat[t_r][t_c])
+			{
+				max_out = OutImageMat[t_r][t_c];
+			}
+		}
+	}
+	cout << "done." << endl;
+	return;
 }
 
 ///////////////////////////////////// StereoMatching with DP ////////////////////////////////////////////
