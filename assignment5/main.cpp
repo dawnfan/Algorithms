@@ -9,7 +9,7 @@ int main()
 	ReadImageTxt("L.txt", LeftImageMat);
 	ReadImageTxt("R.txt", RightImageMat);
 
-	//MatchStereo(LeftImageMat, RightImageMat);
+	MatchStereo(LeftImageMat, RightImageMat);
 
 	WriteTxtImage("out.txt", OutImageMat);
 
